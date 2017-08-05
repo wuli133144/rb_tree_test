@@ -25,29 +25,31 @@ typedef struct __node_task{
 
 
 /*comp a and b*/
-/*note:com must return >0value and <0 value*/
+/*note:com must return >0 value and <0 value*/
 int cmp(task_t *a,task_t *b){
       return a->value>b->value?1:-1;
 }
 
-RB_PROTOTYPE(rb_task,__node_task,entry,cmp);
-RB_GENERATE(rb_task,__node_task,entry,cmp);
-RB_HEAD(task_head,__node_task)head=RB_INITIALIZER(NULL);
+RB_HEAD(exp,__node_task);
 
+struct exp st_task=RB_INITIALIZER(NULL);
+
+RB_PROTOTYPE(exp,__node_task,entry,cmp);
+RB_GENERATE(exp,__node_task,entry,cmp);
 
 
 void append(task_t *a){
-      return RB_INSERT(__node_task,&head,a);
+      return RB_INSERT(__node_task,&st_task,a);
 }
 
 
 
 void print(void)
 {
-    
 	task_t *item;
-	RB_FOREACH(x, task_t, &head) {
-		printf("%d\n", x->value);
+     
+	RB_FOREACH(item, __node_task, &st_task) {
+		printf("%d\n", item->value);
 	}
 
 }
