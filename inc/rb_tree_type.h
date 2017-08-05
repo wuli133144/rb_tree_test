@@ -1,4 +1,3 @@
-#include"tree.h"
 
 /*
  Copyright <YEAR> <COPYRIGHT HOLDER>
@@ -15,23 +14,14 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 
 
 
+#include"tree.h"
 
-typedef void (*handler)(int);
 
 typedef struct __node_task{
  int tid;
  int value;
-
  RB_ENTRY(__node_task)entry;
 }task_t;
-
-
-
-RB_PROTOTYPE(rb_task,__node_task,entry,cmp);
-
-RB_GENERATE(rb_task,__node_task,entry,cmp);
-
-RB_HEAD(task_head,__node_task)head=RB_INITIALIZER(NULL);
 
 
 /*comp a and b*/
@@ -40,16 +30,22 @@ int cmp(task_t *a,task_t *b){
       return a->value>b->value?1:-1;
 }
 
+RB_PROTOTYPE(rb_task,__node_task,entry,cmp);
+RB_GENERATE(rb_task,__node_task,entry,cmp);
+RB_HEAD(task_head,__node_task)head=RB_INITIALIZER(NULL);
+
+
+
 void append(task_t *a){
-      
       return RB_INSERT(__node_task,&head,a);
 }
 
 
+
 void print(void)
 {
-	task_t *x;
-
+    
+	task_t *item;
 	RB_FOREACH(x, task_t, &head) {
 		printf("%d\n", x->value);
 	}
